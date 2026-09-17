@@ -45,7 +45,7 @@ public class Calculator {
         JButton buttonEquals = new JButton("=");
         JButton buttonDivide = new JButton("/");
 
-        // Add buttons to panel
+        // Add buttons
         panel.add(button7);
         panel.add(button8);
         panel.add(button9);
@@ -66,7 +66,7 @@ public class Calculator {
         panel.add(buttonEquals);
         panel.add(buttonDivide);
 
-        // Add display and panel to frame
+        // Add display and panel
         frame.add(display, BorderLayout.NORTH);
         frame.add(panel, BorderLayout.CENTER);
 
@@ -103,35 +103,46 @@ public class Calculator {
 
         // Plus
         buttonPlus.addActionListener(e -> {
-            num1 = Double.parseDouble(display.getText());
-            operator = "+";
-            display.setText("");
+            if (!display.getText().isEmpty()) {
+                num1 = Double.parseDouble(display.getText());
+                operator = "+";
+                display.setText("");
+            }
         });
 
         // Minus
         buttonMinus.addActionListener(e -> {
-            num1 = Double.parseDouble(display.getText());
-            operator = "-";
-            display.setText("");
+            if (!display.getText().isEmpty()) {
+                num1 = Double.parseDouble(display.getText());
+                operator = "-";
+                display.setText("");
+            }
         });
 
         // Multiply
         buttonMultiply.addActionListener(e -> {
-            num1 = Double.parseDouble(display.getText());
-            operator = "*";
-            display.setText("");
+            if (!display.getText().isEmpty()) {
+                num1 = Double.parseDouble(display.getText());
+                operator = "*";
+                display.setText("");
+            }
         });
 
         // Divide
         buttonDivide.addActionListener(e -> {
-            num1 = Double.parseDouble(display.getText());
-            operator = "/";
-            display.setText("");
+            if (!display.getText().isEmpty()) {
+                num1 = Double.parseDouble(display.getText());
+                operator = "/";
+                display.setText("");
+            }
         });
 
         // Equals
-        // Bug fixing
         buttonEquals.addActionListener(e -> {
+
+            if (display.getText().isEmpty() || operator.isEmpty()) {
+                return;
+            }
 
             num2 = Double.parseDouble(display.getText());
 
@@ -140,25 +151,27 @@ public class Calculator {
             if (operator.equals("+")) {
                 result = num1 + num2;
             }
-
-            if (operator.equals("-")) {
+            else if (operator.equals("-")) {
                 result = num1 - num2;
             }
-
-            if (operator.equals("*")) {
+            else if (operator.equals("*")) {
                 result = num1 * num2;
             }
+            else if (operator.equals("/")) {
 
-            if (operator.equals("/")) {
-                if (num2 != 0) {
-                    result = num1 / num2;
-                } else {
+                if (num2 == 0) {
                     display.setText("Cannot divide by 0");
                     return;
                 }
+
+                result = num1 / num2;
             }
 
             display.setText(String.valueOf(result));
+
+            // Store result for next calculation
+            num1 = result;
+            operator = "";
         });
 
         // Clear
@@ -169,7 +182,7 @@ public class Calculator {
             operator = "";
         });
 
-        // Show frame
+        // Show calculator
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
