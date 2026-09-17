@@ -130,6 +130,7 @@ public class Calculator {
         });
 
         // Equals
+        // Bug fixing
         buttonEquals.addActionListener(e -> {
 
             num2 = Double.parseDouble(display.getText());
